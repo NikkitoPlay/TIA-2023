@@ -1,3 +1,4 @@
+ORIGEM = 4;
 mapa = [0 1 7 2 6 3 1; 
         1 0 1 9 3 10 8;
         7 1 0 1 4 3 7;
@@ -30,47 +31,44 @@ function vAptidao = criaVetorAptidao(pop, mapa)
   endfor
 endfunction
 
-function filhos = crossover(um, dois)
-  if(rand()<0.8)
-    filhos = [];
+function novosIndividuos = crossover(um, dois)
+    filhos = zeros(2,8);
     filhos(1,1) = um(1);
-    filhos(1,2:3) = dois(6:7);
-    filhos(1,4:5) = um(4:5);
-    filhos(1,6:7) = dois(2:3);
-    filhos(1,8) = um(8);
+    filhos(1,2:4) = dois(5:7);
+    filhos(1,5:7) = um(2:4);
+    filhos(1,8) = um(1);
 
     filhos(2,1) = dois(1);
-    filhos(2,2:3) = um(6:7);
-    filhos(2,4:5) = dois(4:5);
-    filhos(2,6:7) = um(2:3);
-    filhos(2,8) = dois(8);
-
-    cidadesAusentes = zeros(1,2);
-    for j=1:2
-      aux = inf(1,7);
-      for i=1:7
-        aux(filhos(j,i)) = 0;
+    filhos(2,2:4) = um(5:7);
+    filhos(2,5:7) = dois(2:4);
+    filhos(2,8) = dois(1);
+    for l=1:3
+      cidadesAusentes = zeros(1,2);
+      for j=1:2
+        aux = inf(1,7);
+        for i=1:7
+          aux(filhos(j,i)) = 0;
+        endfor
+        [~,cidadesAusentes(j)] = max(aux);
       endfor
-      [~,cidadesAusentes(j)] = max(aux);
+      if(sum(cidadesAusentes != 0))
+        for i=1:7
+          if filhos(1,i) == cidadesAusentes(2)
+            filhos(1,i) = cidadesAusentes(1);
+            break;
+          endif
+        endfor
+        for i=1:7
+          if filhos(2,i) == cidadesAusentes(1)
+            filhos(2,i) = cidadesAusentes(2); 
+            break;
+          endif
+        endfor
+      else
+        continue;
+      endif
     endfor
-    if min(cidadesAusentes)!=0
-      for i=1:7
-        if filhos(1,i) == cidadesAusentes(2)
-          filhos(1,i) = cidadesAusentes(1);
-          break;
-        endif
-      endfor
-      for i=1:7
-        if filhos(2,i) == cidadesAusentes(1)
-          filhos(2,i) = cidadesAusentes(2); 
-          break;
-        endif
-      endfor
-    endif
-  else
-    filhos(1,:) = um;
-    filhos(2,:) = dois;
-  endif
+    novosIndividuos = filhos;
 endfunction
 
 function maior = torneio(vetorPontuacao)
@@ -80,7 +78,7 @@ function maior = torneio(vetorPontuacao)
   until (i&&j != 0)
   if vetorPontuacao(i)>=vetorPontuacao(j)
     maior = i;
-    else maior = j;
+  else maior = j;
   endif
 endfunction
 
@@ -97,23 +95,27 @@ endfunction
 
 function genesMutados = mutacao(individuo)
   novoIndividuo = individuo;
+  do
     j = round(rand()*5+2);
     k = round(rand()*5+2);
+  until j!=k
   novoIndividuo(j) = individuo(k);
   novoIndividuo(k) = individuo(j);
   genesMutados = novoIndividuo;
 endfunction
 
-populacao = criaPopulacao(2,7);
+# main
+populacao = criaPopulacao(ORIGEM,7);
 aptidao = criaVetorAptidao(populacao, mapa);
 geracao = 1;
+melhorIndividuo = min(aptidao);
 do
   for j=1:4
     populacao = removeLinha(populacao, torneio(aptidao));
     aptidao = criaVetorAptidao(populacao, mapa);
   endfor
   for k=1:2
-    filho = crossover(populacao(k,:), populacao(end-k,:));
+    filho = crossover(populacao(k,:), populacao(end-(k-1),:));
     if(rand()>0.5)
       indice = round(rand()*1+1);
       filho(indice,:) = mutacao(filho(indice,:));
@@ -121,8 +123,14 @@ do
     populacao = [populacao; filho];
     filho = [];
   endfor
-
   aptidao = criaVetorAptidao(populacao, mapa);
   geracao++;
-until(min(aptidao)<=8)
-geracao
+  melhorIndividuo = [melhorIndividuo, min(aptidao)]; #guarda em um vetor o melhor individuo de cada geracao
+until(min(aptidao)<8)
+#plotando o grafico
+x = 1:geracao;
+[~,menor] = min(aptidao);
+caminho = num2str(populacao(menor,:));
+plot(x, melhorIndividuo);
+title(caminho);
+1;
