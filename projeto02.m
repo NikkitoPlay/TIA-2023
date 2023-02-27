@@ -131,5 +131,4 @@ until(min(aptidao)<8)
 x = 1:geracao;
 [~,menor] = min(aptidao);
 caminho = num2str(populacao(menor,:));
-plot(x, melhorIndividuo);
-title(caminho);
+plot(x, melhorIndividuo); title(caminho);
