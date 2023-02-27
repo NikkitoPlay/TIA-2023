@@ -6,7 +6,6 @@ mapa = [0 1 7 2 6 3 1;
         6 3 4 1 0 1 2;
         1 0 3 2 1 0 1;
         1 8 7 5 2 1 0];
-
 function pop = criaPopulacao(origem, numCidades)
   pop = zeros(10,numCidades+1);
   for i=1:10
@@ -127,10 +126,10 @@ do
   geracao++;
   melhorIndividuo = [melhorIndividuo, min(aptidao)]; #guarda em um vetor o melhor individuo de cada geracao
 until(min(aptidao)<8)
+
 #plotando o grafico
 x = 1:geracao;
 [~,menor] = min(aptidao);
 caminho = num2str(populacao(menor,:));
 plot(x, melhorIndividuo);
 title(caminho);
-1;
