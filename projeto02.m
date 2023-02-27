@@ -1,3 +1,4 @@
+ORIGEM = 4;
 mapa = [0 1 7 2 6 3 1; 
         1 0 1 9 3 10 8;
         7 1 0 1 4 3 7;
@@ -103,7 +104,6 @@ function genesMutados = mutacao(individuo)
 endfunction
 
 # main
-ORIGEM = input("Digite a cidade de origem!!\n");
 populacao = criaPopulacao(ORIGEM,7);
 aptidao = criaVetorAptidao(populacao, mapa);
 geracao = 1;
