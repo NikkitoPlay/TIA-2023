@@ -1,4 +1,4 @@
-ORIGEM = 5;
+ORIGEM = input('Digite a origem:  ');
 mapa = [0 1 7 2 6 3 1; 
         1 0 1 9 3 10 8;
         7 1 0 1 4 3 7;
