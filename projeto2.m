@@ -144,7 +144,7 @@ geracao = 1;
 melhorIndividuo = min(aptidao);
 do
 
-    pais = selecionaPais(populacao, elitismo(aptidao));#seleciona genitores elitismo|roleta|torneio
+    pais = selecionaPais(populacao, roleta(aptidao));#seleciona genitores elitismo|roleta|torneio
     filho = crossover(pais(1,:), pais(2,:));
     if(rand()>0.1)
       indice = round(rand()*1+1);
@@ -158,7 +158,7 @@ do
     aptidao = criaVetorAptidao(populacao, mapa);
     geracao++;
     melhorIndividuo = [melhorIndividuo, min(aptidao)]; #guarda em um vetor o melhor individuo de cada geracao
-until(min(aptidao)<8)
+until(min(aptidao)<8)||(geracao>10000)
 
 #plotando o grafico
 x = 1:geracao;
