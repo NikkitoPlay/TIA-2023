@@ -73,7 +73,8 @@ function genitores = elitismo(aptidao)
 endfunction
 
 function genitores = selecionaPais(populacao, indices)
-    pais = zeros(columns(indices), 9);
+    nLetras = columns(populacao(1,:));
+    pais = zeros(columns(indices), nLetras);
     for i=1:columns(indices)
         pais(i,:) = populacao(indices(i),:);
     endfor
@@ -81,21 +82,19 @@ function genitores = selecionaPais(populacao, indices)
 endfunction
 
 function novosIndividuos = crossover(um, dois)
-  filhos = zeros(2,9);
-  for i=1:10 
-    c = mod(i,10);
-    if (c != 0)
-      switch (mod(i,2))
-        case 0
-          filhos(1, c)=um(c);
-          filhos(2, c)=dois(c);
-        case 1
-          filhos(1, c)=dois(c);
-          filhos(2, c)=um(c);
-        otherwise
-          1;
-      endswitch
-    endif
+  nLetras=columns(um);
+  filhos = zeros(2,nLetras);
+  for i=1:nLetras 
+    switch (mod(i,2))
+      case 0
+        filhos(1, i)=um(i);
+         filhos(2, i)=dois(i);
+      case 1
+        filhos(1, i)=dois(i);
+        filhos(2, i)=um(i);
+       otherwise
+         1;
+    endswitch
   endfor
   novosIndividuos = filhos;    
 endfunction
@@ -103,7 +102,7 @@ endfunction
 function genesMutados = mutacao(individuo, n) # troca aleatoriamente 'n' letras de um individuo
   ind = zeros(1, n);
   for i=1:n
-    ind(i) = randperm(9,1);
+    ind(i) = randperm(columns(individuo),1);
   endfor
   for k=1:n
     individuo(ind(k)) = randperm(26,1)+96;
@@ -130,7 +129,7 @@ endfunction
 ################################### M A I N #########################################
 
 
-palavra = int8(input("Digite uma palavra de 9 letras entre aspas simples -> "));
+palavra = int8(input("Digite uma palavra entre aspas simples -> "));
 populacao = criaPop(palavra);
 aptidao = criaApt(populacao, palavra);
 melhorIndividuo = min(aptidao);
