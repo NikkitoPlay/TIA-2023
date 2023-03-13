@@ -1,3 +1,4 @@
+#este algoritmo descobre uma palavra secreta digitada pelo usuario
 1;
 function populacao = criaPop(palavra)
   alfabeto = [97:122];
