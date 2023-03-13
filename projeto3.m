@@ -148,9 +148,14 @@ do
   for i=1:2
     populacao = removeLinha(populacao, matar(aptidao));
   endfor
+
   aptidao = criaApt(populacao, palavra);
   geracao++;
   melhorIndividuo = [melhorIndividuo, min(aptidao)]; #guarda em um vetor o melhor individuo de cada geracao
+  
+  [~,k]=min(aptidao);
+  bw = char(populacao(k,:));
+  disp(bw);
 until(min(aptidao) == 0);
 
 #plotando o grafico
