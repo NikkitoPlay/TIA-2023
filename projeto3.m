@@ -3,11 +3,11 @@
 function populacao = criaPop(palavra) #cria uma populacao preenchida com todo o alfabeto
   alfabeto = [97:122];
   nLetras = columns(palavra);
-  m = zeros(15, nLetras); #15 individuos
+  m = zeros(15, nLetras); #cria uma matriz com 15 linhas e numero de coluna igual ao numero de letras na palavra
   r=1; #comeca na linha_1
   for i=1:(15*nLetras)
-    c = mod(i,nLetras);
-    if (c == 0)
+    c = mod(i,nLetras); #indice ciclico 1-nLetras
+    if (c == 0) #significa que o contador chegou na ultima letra 
         c = nLetras;
         if (mod(i,27)!=0)
             m(r, c) = alfabeto(mod(i,27));
@@ -82,7 +82,7 @@ function genitores = selecionaPais(populacao, indices)
     genitores = pais;
 endfunction
 
-function novosIndividuos = crossover(um, dois)
+function novosIndividuos = crossover(um, dois) # faz um crossover um-a-um entra os genes selecionados
   nLetras=columns(um);
   filhos = zeros(2,nLetras);
   for i=1:nLetras
