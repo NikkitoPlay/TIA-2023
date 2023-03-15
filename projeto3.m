@@ -1,6 +1,6 @@
 #este algoritmo descobre uma palavra secreta digitada pelo usuario
 1;
-function populacao = criaPop(palavra)
+function populacao = criaPop(palavra) #cria uma populacao preenchida com todo o alfabeto
   alfabeto = [97:122];
   nLetras = columns(palavra);
   m = zeros(15, nLetras); #15 individuos
@@ -20,13 +20,13 @@ function populacao = criaPop(palavra)
             m(r, c) = alfabeto(mod(i,27));
         else
             m(r, c) = randperm(26,1)+96;
-        endif 
+        endif
     endif
   endfor
   populacao = m;
 endfunction
 
-function distancia = calcDistancias(individuo, palavra)
+function distancia = calcDistancias(individuo, palavra) #calcula um numero que representa o quão proximo está a palavra
   v = zeros(1,columns(palavra));
   for i=1:columns(palavra)
     v(i) = abs(individuo(i) - palavra(i));
@@ -34,7 +34,7 @@ function distancia = calcDistancias(individuo, palavra)
   distancia = sum(v);
 endfunction
 
-function aptidao = criaApt(populacao, palavra)
+function aptidao = criaApt(populacao, palavra) #cria um vetor que calcula a aptidao de cada individuo
   v = zeros(1,rows(populacao));
   for i=1:rows(populacao)
     v(i) = calcDistancias(populacao(i,:), palavra);
@@ -85,7 +85,7 @@ endfunction
 function novosIndividuos = crossover(um, dois)
   nLetras=columns(um);
   filhos = zeros(2,nLetras);
-  for i=1:nLetras 
+  for i=1:nLetras
     switch (mod(i,2))
       case 0
         filhos(1, i)=um(i);
@@ -97,7 +97,7 @@ function novosIndividuos = crossover(um, dois)
          1;
     endswitch
   endfor
-  novosIndividuos = filhos;    
+  novosIndividuos = filhos;
 endfunction
 
 function genesMutados = mutacao(individuo, n) # troca aleatoriamente 'n' letras de um individuo
@@ -140,7 +140,7 @@ do
   pais = selecionaPais(populacao, elitismo(aptidao));
   filhos = crossover(pais(1,:), pais(2,:));
 
-  if(rand()<0.7)
+  if(rand()<0.9)
     indice = round(rand()*1+1);
     filhos(indice,:) = mutacao(filhos(indice,:), 1);
   endif
@@ -153,13 +153,14 @@ do
   aptidao = criaApt(populacao, palavra);
   geracao++;
   melhorIndividuo = [melhorIndividuo, min(aptidao)]; #guarda em um vetor o melhor individuo de cada geracao
-  
+
   [~,k]=min(aptidao);
   bw = char(populacao(k,:));
   disp(bw);
 until(min(aptidao) == 0);
 
 #plotando o grafico
+printf("individuo encontrado, geracao %d \n", geracao)
 x = 1:geracao;
 [~,menor] = min(aptidao);
 caminho = char(populacao(menor,:));
