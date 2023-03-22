@@ -57,20 +57,20 @@ function vencedores = torneio(vetorPontuacao)
     vencedores = indices;
 endfunction
 
-function individuo = roleta(vetorPontuacao)
+function vencedores = roleta(vetorPontuacao)
   do
     i = round(rand()*columns(vetorPontuacao));
     k = round(rand()*columns(vetorPontuacao));
   until(i&&k!=0);
-  individuo = [i,k];
+  vencedores = [i,k];
 endfunction
 
-function genitores = elitismo(aptidao)
+function vencedores = elitismo(aptidao)
     indice = zeros(1,2);
     [~,indice(1)] = min(aptidao);
     aptidao(indice(1)) = inf;
     [~,indice(2)] = min(aptidao);
-    genitores = indice;
+    vencedores = indice;
 endfunction
 
 function genitores = selecionaPais(populacao, indices)
@@ -163,5 +163,5 @@ until(min(aptidao) == 0);
 printf("individuo encontrado, geracao %d \n", geracao)
 x = 1:geracao;
 [~,menor] = min(aptidao);
-caminho = char(populacao(menor,:));
-plot(x, melhorIndividuo); title(caminho);
+pEncontrada = char(populacao(menor,:));
+plot(x, melhorIndividuo); title(pEncontrada);
