@@ -49,6 +49,7 @@ posicao = InitMatrix(2);
 velocidade = InitMatrix(2);
 pBest = InitMatrix(2);
 gBest = rand(1,2);
+melhoresPosicoes = avaliarParticulas(gBest);
 
 for it=1:50
   aptidao = avaliarParticulas(posicao);
@@ -65,8 +66,10 @@ for it=1:50
   for i=1:rows(posicao) #atualiza posicao
     posicao(i,:) =  posicao(i,:) + velocidade(i,:);
   endfor
-  gBest
-  avaliarParticulas(gBest)
   w = w*0.95;
-  margem = 0.01;
+  melhoresPosicoes = [melhoresPosicoes, avaliarParticulas(gBest)];
 endfor
+
+columns(melhoresPosicoes)
+x=1:51;
+plot(x, melhoresPosicoes); title(avaliarParticulas(gBest));
