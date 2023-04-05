@@ -70,6 +70,6 @@ for it=1:50
   melhoresPosicoes = [melhoresPosicoes, avaliarParticulas(gBest)];
 endfor
 
-columns(melhoresPosicoes)
-x=1:51;
+
+x=1:columns(melhoresPosicoes);
 plot(x, melhoresPosicoes); title(avaliarParticulas(gBest));
