@@ -47,7 +47,7 @@ function prototipos = atualizaPrototipos(dataBase, mPertinencia)
   prototipos = p;
 endfunction
 
-############################################ *  M  A  I  N  * ############################################
+############################################   M  A  I  N   ############################################
 
 dataBase = load('C:\Users\nikit\Documents\facul-2002\TIA\projeto04\ruspiniNormalizado.m');
 pPrototipos = rand(4,2);
