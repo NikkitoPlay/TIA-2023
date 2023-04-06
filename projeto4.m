@@ -68,8 +68,21 @@ for it=1:50
   endfor
   w = w*0.95;
   melhoresPosicoes = [melhoresPosicoes, avaliarParticulas(gBest)];
+
+subplot(1,2,1)
+plot(gBest(1,1), gBest(1,2), 'o', 'MarkerFaceColor', 'red', 'Markersize', 4); 
+title(sprintf("%d, %d", gBest(1,1), gBest(1,2)), 'fontsize',14); 
+axis("square");
+line([-1.5,1.5], [0,0], 'color', 'black', 'linewidth', .1);
+line([0,0], [-1.5,1.5], 'color', 'black', 'linewidth', .1);
+drawnow; 
+hold on;
 endfor
+hold off;
 
-
+subplot(1,2,2)
 x=1:columns(melhoresPosicoes);
-plot(x, melhoresPosicoes); title(avaliarParticulas(gBest));
+plot(x, melhoresPosicoes); 
+title(avaliarParticulas(gBest), 'fontsize',14);
+axis("square"); 
+drawnow; 
