@@ -1,3 +1,6 @@
+% -- calcula as coordenadas x e y APROXIMADAS onde a função 'x^2 - 10*cos(2*pi*x) + y^2 - 10*cos(2*pi*y)' é MÍNIMA
+% -- este código usa o algorimo PSO (Otimização por Enxame de Partícula)
+
 1;
 function imagem = calcFit(particula)
   x = particula(1);
