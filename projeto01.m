@@ -1,9 +1,13 @@
+% -- este algoritmo pode ser executado no octave, ou no matlab.
+% -- Encontrar o valor máximo da função f(x) = x^2 , com as restrições 0 <= x <= 63 e x é inteiro.
+% -- População com 100 individuos
+
 function matrix = set1(m, i,k)
   matrix = m;
   matrix(i,k) = 1;
 endfunction
 
-function valor = avaliarIndividuo(m, i)
+function valor = avaliarIndividuo(m, i) %avalia a aptidao de um individuo
   valor = 0;
   for j=5:-1:0
     valor = valor+m(i,columns(m)-j)*(2^j);
@@ -40,7 +44,7 @@ function perdedor = torneio(vetorPontuacao)
   endif
 endfunction
 
-function populacao = criaPop()
+function populacao = criaPop() % cria populacao com 100 individuos aleatorios
   pop = zeros(100,6);
   for j=1:rows(pop)
     for k=1:6
