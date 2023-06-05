@@ -1,4 +1,9 @@
-ORIGEM = input('Digite a origem  ');
+% -- Este codigo pode ser executado no octave
+% -- Problema do caixeiro viajante resolvido usando algoritmo genético
+% -- Usuário entra com um numero que representa a cidade de origem [1-7]
+
+ORIGEM = input('Digite a origem  '); 
+# matriz que que representa um mapeamento das cidades ligadas entre si, e o custo relacionado a cada caminho
 mapa = [0 1 7 2 6 3 1;
         1 0 1 9 3 10 8;
         7 1 0 1 4 3 7;
